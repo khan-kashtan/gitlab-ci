@@ -1,0 +1,6 @@
+---
+- name: Configure Gitlab host
+  hosts: gitlab_host
+  become: yes
+  roles:
+    - app

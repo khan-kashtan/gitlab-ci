@@ -1,0 +1,30 @@
+---
+# tasks file for app
+
+- name: "Get docker-compose file" # Attention! This is not universal url address!!! More information at https://docs.docker.com/compose/install/#install-compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-Linux-x86_64"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+
+- name: "Creating multiple by checking folders"
+  file:
+    path: "{{item}}"
+    state: directory
+  with_items: ["/srv/gitlab/config","/srv/gitlab/data","/srv/gitlab/logs"]
+
+- name: "Copy docker-compose.yml"
+  template:
+    src: docker-compose.yml.j2
+    dest: /srv/gitlab/docker-compose.yml
+    mode: 0644
+
+- name: "Add docker group"
+  user: name=docker groups=docker append=yes
+  notify: reset ssh connection
+
+- name: Run `docker-compose`
+  become: no
+  shell:
+    cmd: docker-compose up -d
+    chdir: /srv/gitlab/

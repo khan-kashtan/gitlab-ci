@@ -1,0 +1,5 @@
+---
+# handlers file for app
+- name: reset ssh connection
+  meta: reset_connection
+  ignore_errors: yes
