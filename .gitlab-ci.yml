@@ -3,7 +3,7 @@ image: ruby:2.4.2
 stages:
   - build
   - test
-  - deploy
+  - review
 
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
@@ -24,8 +24,10 @@ test_unit_job:
   script:
     - ruby simpletest.rb
 
-deploy_job:
-  stage: deploy
+deploy_dev_job:
+  stage: review
   script:
     - echo 'Deploy'
-
+  environment:
+    name: dev
+    url: http://dev.example.com
