@@ -1,6 +1,6 @@
-# service_account_file: /home/username/.ssh/service_account_credencials.json 
-# projects:
-#   - project-ID
+service_account_file: /home/username/.ssh/service_account_credencials.json 
+projects:
+  - project-ID
 
 plugin: gcp_compute
 auth_kind: serviceaccount
